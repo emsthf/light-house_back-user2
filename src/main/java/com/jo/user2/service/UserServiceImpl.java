@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,8 @@ public class UserServiceImpl implements UserService {
                 .id(user.getId())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .name(user.getName())
+                .phoneNum(user.getPhoneNum())
                 .build();
         return userRepository.save(user);
     }
@@ -50,22 +53,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-//    @Override
-//    public List<User> getAllUser() {
-//        return userRepository.findAll();
-//    }
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+    }
 
     // 유저 검색
-//    @Override
-//    public List<User> searchUsers(String keyword) {
-//        List<User> users = userRepository.findByEmailOrPasswordContaining(keyword);
+    @Transactional
+    @Override
+    public List<User> searchUsers(String keyword) {
+        log.info("### 유저 검색 시작 ###");
+        List<User> users = userRepository.findByEmailContaining(keyword);
+        log.info("### 유저 레포지토리에서 키워드로 서칭 => 리턴 유저 리스트 ###");
 //        List<User> userList = new ArrayList<>();
 //
-//        if (users.isEmpty()) return userList;
-//
-//        for (User user : users) {
-//            userList.add(user);
+//        if (!users.isEmpty()) {
+//            for (User user : users) {
+//                userList.add(user);
+//            }
 //        }
-//        return userList;
-//    }
+        return users;
+    }
 }

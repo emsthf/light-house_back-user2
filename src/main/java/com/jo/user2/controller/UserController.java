@@ -48,11 +48,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-//    // 모든 회원 정보 조회(관리자)
-//    @GetMapping("/user/getAll")
-//    public List<User> getAllUser() {
-//        return userService.getAllUser();
-//    }
+    // 모든 회원 정보 조회(관리자)
+    @GetMapping("/user/getAll")
+    public List<User> getAllUser() {
+        return userService.getAllUser();
+    }
 
     // 회원 정보 수정
     @PutMapping("/user/edit")
@@ -60,12 +60,15 @@ public class UserController {
         return userService.update(user);
     }
 
-//    // 회원 검색
-//    @GetMapping("/user/search")
-//    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
-//        List<User> userList = userService.searchUsers(keyword);
-//        model.addAttribute("user", userList);
-//
-//        return "board/list.html";
-//    }
+    // 회원 검색
+    @GetMapping("/user/search")
+    public List<User> search(@RequestParam(value = "keyword") String keyword, Model model) {
+        log.info("@@@ 유저 검색 api 작동 @@@");
+        List<User> userList = userService.searchUsers(keyword);
+        log.info("@@@ 유저 서비스 작동 완료 @@@");
+        model.addAttribute("userList", userList);
+        log.info("@@ addAttribute => 리턴 유저 리스트 @@");
+
+        return userList;
+    }
 }

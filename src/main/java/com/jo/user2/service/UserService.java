@@ -10,6 +10,6 @@ public interface UserService {
     User getUser(final String email, final String password);
     User update(final User user);
     Optional<User> getUserById(Long id);
-//    List<User> getAllUser();
-//    List<User> searchUsers(String keyword);
+    List<User> getAllUser();
+    List<User> searchUsers(String keyword);
 }
