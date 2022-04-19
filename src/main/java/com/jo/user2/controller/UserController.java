@@ -62,12 +62,10 @@ public class UserController {
 
     // 회원 검색
     @GetMapping("/user/search")
-    public List<User> search(@RequestParam(value = "keyword") String keyword, Model model) {
+    public List<User> search(@RequestParam(value = "keyword") String keyword) {
         log.info("@@@ 유저 검색 api 작동 @@@");
         List<User> userList = userService.searchUsers(keyword);
         log.info("@@@ 유저 서비스 작동 완료 @@@");
-        model.addAttribute("userList", userList);
-        log.info("@@ addAttribute => 리턴 유저 리스트 @@");
 
         return userList;
     }

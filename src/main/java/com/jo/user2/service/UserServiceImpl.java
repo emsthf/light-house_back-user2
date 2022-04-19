@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,4 +73,11 @@ public class UserServiceImpl implements UserService {
 //        }
         return users;
     }
+
+//    private User convertEntityToDto(UserDto userDto){
+//        return User.builder()
+//                .id(userDto.getId())
+//                .email(userDto.getEmail())
+//                .build();
+//    }
 }
