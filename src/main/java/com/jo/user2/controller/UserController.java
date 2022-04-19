@@ -1,0 +1,71 @@
+package com.jo.user2.controller;
+
+import com.jo.user2.model.User;
+import com.jo.user2.service.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api")
+public class UserController {
+    private final UserService userService;
+
+    // 회원 가입
+    @PostMapping("/signup")
+    public void signUp(@RequestBody User user) {
+        try {
+            User user1 = User.builder()
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .build();
+            User registeredUser = userService.create(user);
+        } catch (Exception e) {
+            log.error(e.getMessage() + " signup fail!!!");
+        }
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        User user1 = userService.getUser(user.getEmail(), user.getPassword());
+        if(user1 != null) {
+            return "login Success!!";
+        } else {
+            return "login Fail!!";
+        }
+    }
+
+    // 유저 조회
+    @GetMapping("/user/get/{id}")
+    public Optional<User> getUser(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
+    }
+
+//    // 모든 회원 정보 조회(관리자)
+//    @GetMapping("/user/getAll")
+//    public List<User> getAllUser() {
+//        return userService.getAllUser();
+//    }
+
+    // 회원 정보 수정
+    @PutMapping("/user/edit")
+    public User userEdit(@RequestBody User user) {
+        return userService.update(user);
+    }
+
+//    // 회원 검색
+//    @GetMapping("/user/search")
+//    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
+//        List<User> userList = userService.searchUsers(keyword);
+//        model.addAttribute("user", userList);
+//
+//        return "board/list.html";
+//    }
+}
