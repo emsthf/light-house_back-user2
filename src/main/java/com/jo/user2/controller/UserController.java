@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -33,12 +34,12 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public User login(@RequestBody User user) {
         User user1 = userService.getUser(user.getEmail(), user.getPassword());
         if(user1 != null) {
-            return "login Success!!";
+            return user1;
         } else {
-            return "login Fail!!";
+            return null;
         }
     }
 
