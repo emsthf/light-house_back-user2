@@ -39,7 +39,8 @@ public class UserController {
         if(user1 != null) {
             return user1;
         } else {
-            return null;
+            User fakeUser = new User(0L, "", "", "", "");
+            return fakeUser;
         }
     }
 
